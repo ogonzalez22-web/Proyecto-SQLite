@@ -44,7 +44,7 @@ namespace Proyecto
             dr = cmd.ExecuteReader();
             while (dr.Read())
             {
-                dataGridView1.Rows. Insert(0,dr.GetString(0), dr.GetString(1));
+                dataGridView1.Rows.Insert(0, dr.GetString(0), dr.GetString(1));
             }
         }
         private void Create_db()
@@ -63,6 +63,80 @@ namespace Proyecto
             else
             {
                 MessageBox.Show("La Base de datos ya existe");
+                return;
+            }
+        }
+
+        private void InsertarBTN_Click(object sender, EventArgs e)
+        {
+            var con = new SQLiteConnection(cs);
+            con.Open();
+            var cmd = new SQLiteCommand(con);
+            try
+            {
+                cmd.CommandText = "INSERT INTO test(name, id) VALUES(@name, @id)";
+                string NAME = NombreTXTB.Text;
+                cmd.Parameters.AddWithValue("@name", NAME);
+                string ID = IDTXTBX.Text;
+                cmd.Parameters.AddWithValue("@name", NAME);
+                cmd.Parameters.AddWithValue("@id", ID);
+
+                dataGridView1.ColumnCount = 2;
+                dataGridView1.Columns[0].Name = "Nombre";
+                dataGridView1.Columns[1].Name = "ID";
+                string[] row = new string[] { NAME, ID };
+                dataGridView1.Rows.Add(row);
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo insertar la información ");
+                return;
+            }
+        }
+
+        private void ActualizarBTN_Click(object sender, EventArgs e)
+        {
+            var con = new SQLiteConnection(cs);
+            con.Open();
+            var cmd = new SQLiteCommand(con);
+            try
+            {
+                cmd.CommandText = "UPDATE test SET id=@id WHERE name=@name";
+                cmd.Prepare();
+                cmd.Parameters.AddWithValue("@name", NombreTXTB.Text);
+                cmd.Parameters.AddWithValue("@id", IDTXTBX.Text);
+                cmd.ExecuteNonQuery();
+                dataGridView1.Rows.Clear();
+                data_show();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo actualizar la información ");
+                return;
+            }
+        }
+
+        private void EliminarBTN_Click(object sender, EventArgs e)
+        {
+            var con = new SQLiteConnection(cs);
+            con.Open();
+            var cmd = new SQLiteCommand(con);
+            try
+            {
+                cmd.CommandText = "DELETE FROM test WHERE name=@name";
+                cmd.Prepare();
+                cmd.Parameters.AddWithValue("@name", NombreTXTB.Text);
+                cmd.ExecuteNonQuery();
+                dataGridView1.Rows.Clear();
+                data_show();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo eliminar la información ");
                 return;
             }
         }

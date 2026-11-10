@@ -96,6 +96,7 @@
             InsertarBTN.TabIndex = 5;
             InsertarBTN.Text = "Insertar";
             InsertarBTN.UseVisualStyleBackColor = true;
+            InsertarBTN.Click += InsertarBTN_Click;
             // 
             // ActualizarBTN
             // 
@@ -106,6 +107,7 @@
             ActualizarBTN.TabIndex = 6;
             ActualizarBTN.Text = "Actualizar";
             ActualizarBTN.UseVisualStyleBackColor = true;
+            ActualizarBTN.Click += ActualizarBTN_Click;
             // 
             // EliminarBTN
             // 
@@ -116,6 +118,7 @@
             EliminarBTN.TabIndex = 7;
             EliminarBTN.Text = "Eliminar";
             EliminarBTN.UseVisualStyleBackColor = true;
+            EliminarBTN.Click += EliminarBTN_Click;
             // 
             // dataGridView1
             // 
